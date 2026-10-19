@@ -1,1 +1,2 @@
-To be executed
+# Cowrie is a static HTML, CSS, and JavaScript prototype.
+# No Python packages are required.
