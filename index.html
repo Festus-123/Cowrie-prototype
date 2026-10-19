@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cowrie — never wonder if your money moved</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0B0B0C;--tx:#111827;--mu:#6B7280;--ln:#E8EAED;--bg:#F6F7F9;--gr:#16A34A;--gb:#22C55E;--gs:#E8F7EE;--gd:#166534;--am:#F59E0B;--as:#FFF4DE;--ad:#B45309;--page:#E9ECF0;--ptx:#111827;--pmu:#6B7280;box-sizing:border-box}
+@media(prefers-color-scheme:dark){:root{--page:#14161A;--ptx:#F3F4F6;--pmu:#9CA3AF}}
+*{box-sizing:border-box;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--page);color:var(--ptx);display:flex;align-items:center;justify-content:center;gap:56px;padding:16px;overflow:hidden}
+button{border:0;background:none;color:inherit;font:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--gb);outline-offset:2px}
+.side{max-width:300px}
+.side h1{font-size:34px;letter-spacing:-.03em;line-height:1.1}
+.side p{color:var(--pmu);margin-top:12px;line-height:1.55;font-size:15px}
+.side ol{margin:16px 0 0 18px;color:var(--pmu);font-size:14px;line-height:1.8}
+.phone{position:relative;width:390px;height:min(844px,calc(100dvh - 32px));background:var(--bg);border-radius:44px;overflow:hidden;box-shadow:0 0 0 10px #0B0B0C,0 30px 80px rgba(0,0,0,.28);color:var(--tx)}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg)}
+.scr.in{animation:in .3s ease-out}
+@keyframes in{from{opacity:0;transform:translateX(16px)}}
+.sb{height:54px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:6px 32px 0;font-weight:600;font-size:16px}
+.sb span{display:flex;gap:8px;align-items:center}
+.bat{width:24px;height:12px;border:1.2px solid #11182780;border-radius:4px;position:relative}.bat:after{content:"";position:absolute;inset:1.5px 4px 1.5px 1.5px;background:var(--tx);border-radius:2px}
+.scroll{flex:1;overflow:auto;padding:0 20px 130px;scrollbar-width:none}.scroll::-webkit-scrollbar{display:none}
+.scroll.nb{padding-bottom:12px}
+.hdr{display:flex;align-items:center;gap:12px;padding:0 20px 16px}.hdr h1{flex:1;font-size:18px;font-weight:600}
+.cb{width:44px;height:44px;flex:none;border-radius:50%;background:#fff;border:1px solid var(--ln);display:grid;place-items:center;position:relative}
+.cb i{position:absolute;top:8px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--gb);border:2px solid #fff}
+.chip{display:flex;align-items:center;gap:6px;padding:8px 12px 8px 10px;border-radius:99px;font-size:13px;font-weight:600;transition:background .3s,color .3s}
+.chip i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.chip.on{background:var(--gs);color:var(--gd)}.chip.off{background:var(--as);color:var(--ad)}
+.hh{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:600;font-size:15px;font-style:normal;flex:none}
+.gr{flex:1;display:flex;flex-direction:column}.gr small{color:var(--mu);font-size:13px}.gr b{font-size:18px;font-weight:600}
+.bal{position:relative;overflow:hidden;background:var(--ink);color:#fff;border-radius:28px;padding:22px 24px;margin-bottom:18px}
+.bal>*{position:relative}.bal p{display:flex;justify-content:space-between;color:#9CA3AF;font-size:14px;font-weight:500}
+.bal h2{font-size:38px;letter-spacing:-.05em;margin:12px 0}
+.br{display:flex;justify-content:space-between;align-items:center;color:#9CA3AF;font-size:13px}
+.br em{font-style:normal;background:#14532D;color:#86EFAC;font-weight:600;font-size:12px;padding:5px 10px;border-radius:99px}
+.bal .gl,.bal .rg{position:absolute;border-radius:50%}
+.gl{width:220px;height:220px;right:-30px;top:-100px;background:linear-gradient(180deg,rgba(34,197,94,.55),rgba(34,197,94,0))}
+.rg{border:1.5px solid rgba(255,255,255,.1)}.r1{width:170px;height:170px;right:-12px;top:-52px}.r2{width:250px;height:250px;right:-64px;top:-92px;border-color:rgba(255,255,255,.06)}
+.qa{display:flex;gap:12px;margin-bottom:22px}.qa button{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.qa span{width:56px;height:56px;border-radius:50%;background:#fff;border:1px solid var(--ln);display:grid;place-items:center;transition:transform .15s}
+.qa .p span{background:var(--gb);border-color:var(--gb);color:var(--ink)}.qa button:active span{transform:scale(.92)}
+.sh{display:flex;justify-content:space-between;margin:0 0 12px;font-size:16px}.sh b{font-weight:600}.sh a{color:var(--gr);font-size:14px;font-weight:500}
+.rcs{display:flex;gap:14px;margin-bottom:22px}.rcs button{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:500}
+.rcs .av{width:56px;height:56px;font-size:18px}.rcs .new{width:56px;height:56px;border-radius:50%;border:1.5px dashed #D1D5DB;display:grid;place-items:center;color:var(--mu)}
+.list{background:#fff;border-radius:20px;padding:6px 16px}
+.row{display:flex;align-items:center;gap:12px;padding:10px 0;width:100%;text-align:left}
+.row .ic{width:40px;height:40px;border-radius:50%;background:#F3F4F6;display:grid;place-items:center;flex:none}.row.pos .ic{background:var(--gs);color:var(--gr)}.row.pend .ic{background:var(--as);color:var(--ad)}
+.row div{flex:1}.row b{display:block;font-size:15px;font-weight:600}.row small{font-size:12px;color:var(--mu)}.row.pend small{color:var(--ad);font-weight:600}.row strong{font-size:15px;font-weight:600}.row.pos strong{color:var(--gr)}
+.nav{position:absolute;left:24px;right:24px;bottom:30px;height:64px;background:var(--ink);border-radius:32px;display:flex;align-items:center;justify-content:space-between;padding:8px 12px 8px 8px;color:#ffffff99}
+.nav button{width:48px;height:48px;display:grid;place-items:center;border-radius:24px}
+.nav .a{width:auto;padding:0 18px 0 14px;display:flex;gap:8px;background:var(--gb);color:var(--ink);font-weight:600;font-size:14px}
+.card{background:#fff;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px}
+label{display:block;font-size:13px;font-weight:500;color:var(--mu);margin:0 0 8px}
+.lg{width:36px;height:36px;border-radius:50%;background:#FDE8E8;color:#B91C1C;display:grid;place-items:center;font-weight:700;font-style:normal}
+.bnk span{flex:1;font-weight:500;font-size:16px}.bnk{margin-bottom:16px}
+.fld{background:#fff;border-radius:16px;height:56px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--ln);margin-bottom:14px;transition:border-color .2s}
+.fld.f{border-color:var(--gb)}.num{font-size:22px;font-weight:600;letter-spacing:.12em}.num u{text-decoration:none;font-size:15px;font-weight:400;letter-spacing:0;color:#9CA3AF}.fld small{color:var(--mu);font-size:13px;font-weight:500}
+.lk{display:flex;gap:10px;align-items:center;color:var(--mu);font-size:14px;padding:6px 4px}
+.sp{width:16px;height:16px;border:2px solid var(--ln);border-top-color:var(--gb);border-radius:50%;animation:rot .7s linear infinite}@keyframes rot{to{transform:rotate(1turn)}}
+.err{background:#FEF2F2;color:#B91C1C;border-radius:14px;padding:12px 14px;font-size:14px}
+.res{animation:pop .45s cubic-bezier(.2,1.2,.3,1)}@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.96)}}
+.fl{display:flex;gap:6px;align-items:center;color:var(--gr);font-size:13px;font-weight:500;margin:0 4px 8px}
+.rc{width:100%;display:flex;align-items:center;gap:14px;background:var(--gs);border:1.5px solid var(--gb);border-radius:20px;padding:16px;text-align:left;color:var(--gr)}
+.rc div{flex:1;color:var(--tx)}.rc b{display:block;font-size:16px;font-weight:600}.rc small,.card small{font-size:13px;color:var(--mu)}
+.hint{text-align:center;font-size:13px;color:var(--mu);margin-top:8px}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);padding:0 20px 30px;gap:4px}.kp button{height:56px;font-size:26px;font-weight:500;border-radius:14px;display:grid;place-items:center}.kp button:active{background:#E5E7EB}
+.rec b{display:block;font-weight:600;font-size:16px}.vf{display:flex;gap:6px;align-items:center;color:var(--gr);font-size:13px;font-weight:500;margin:8px 4px 0}
+.amt{text-align:center;margin:20px 0 14px}.amt small{display:block;color:var(--mu);font-size:13px}.amt h2{font-size:52px;letter-spacing:-.05em;margin:6px 0}.cur{display:inline-block;width:3px;height:44px;background:var(--gb);margin-left:4px;vertical-align:-6px;border-radius:2px;animation:bl 1s steps(2) infinite}@keyframes bl{50%{opacity:0}}
+.chips{display:flex;gap:8px}.chips button{flex:1;height:36px;border-radius:99px;background:#fff;border:1px solid var(--ln);font-size:13px;font-weight:500}
+.pad{padding:0 20px 28px}.pri{width:100%;height:56px;border-radius:28px;background:var(--ink);color:#fff;font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s,opacity .2s}.pri:active{transform:scale(.97)}.pri:disabled{opacity:.35}
+.ghost{width:100%;height:40px;color:var(--mu);font-weight:500;font-size:15px}
+.big{margin:4px 0 16px}.big small{color:var(--mu);font-size:14px;font-weight:500}.big h2{font-size:48px;letter-spacing:-.06em;margin-top:4px}
+.bd{background:#fff;border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:14px;margin-top:16px}.bd small{font-size:12px;color:var(--mu);font-weight:600;letter-spacing:.06em}
+.kv{display:flex;justify-content:space-between;font-size:14px;gap:12px}.kv span{color:var(--mu)}.kv b{font-weight:500;text-align:right}.kv.t{font-size:16px;border-top:1px solid var(--ln);padding-top:14px}.kv.t span{color:var(--tx);font-weight:600}.kv.t b{font-weight:700}
+.note{text-align:center;font-size:13px;color:var(--mu);margin:0 0 12px}
+.track{--p:0;position:relative;height:64px;margin:0 20px 28px;background:var(--ink);border-radius:32px;overflow:hidden;touch-action:none;user-select:none}
+.track:before{content:"";position:absolute;inset:0;width:calc(60px + var(--p)*(100% - 60px));background:var(--gb);border-radius:32px}
+.lbl{position:absolute;inset:0;display:grid;place-items:center;padding-left:48px;color:#fff;font-weight:600;font-size:16px;opacity:calc(1 - var(--p)*1.5);pointer-events:none}
+.thumb{position:absolute;left:4px;top:4px;width:56px;height:56px;border-radius:50%;background:var(--gb);color:var(--ink);display:grid;place-items:center;cursor:grab;transition:transform .25s}
+.track.done .lbl{opacity:0}
+.scrim{position:absolute;inset:0;background:rgba(11,11,12,.45);animation:fd .3s}@keyframes fd{from{opacity:0}}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:32px 32px 0 0;padding:12px 24px 34px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;animation:up .4s cubic-bezier(.2,.8,.2,1)}@keyframes up{from{transform:translateY(60%);opacity:0}}
+.hd{width:40px;height:4px;border-radius:2px;background:#D9DCE1}
+.badge{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;animation:pop .5s cubic-bezier(.2,1.3,.3,1)}.badge.am{background:var(--as);color:var(--ad)}
+.badge.ok{width:80px;height:80px;background:var(--gb);color:#fff;border-radius:50% 50% 50% 50%/55% 55% 45% 45%;box-shadow:0 0 0 8px rgba(34,197,94,.18)}
+.sheet h3{font-size:22px;letter-spacing:-.02em;line-height:1.25}.sheet p{font-size:15px;color:var(--mu);line-height:1.5}
+.tl{width:100%;background:var(--bg);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:14px;text-align:left}
+.st{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:500}.st span{flex:1}.st small{font-size:13px;color:var(--mu);font-weight:400}.st.td{color:var(--mu)}
+.dt{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:2px solid #D1D5DB;background:#fff;position:relative}
+.dt.d{background:var(--gr);border-color:var(--gr);color:#fff}.dt.a{border-color:var(--am)}.dt.a:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--am)}.dt.a:after{content:"";position:absolute;inset:-2px;border-radius:50%;background:var(--am);opacity:.4;animation:pu 1.3s ease-out infinite}
+@keyframes pu{to{transform:scale(1.6);opacity:0}}
+.sheet .pri,.sheet .ghost{margin:0}
+#toast{position:absolute;left:50%;top:60px;transform:translate(-50%,-90px);background:var(--ink);color:#fff;padding:14px 20px;border-radius:28px;font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center;white-space:nowrap;transition:transform .45s cubic-bezier(.2,.9,.3,1);z-index:9;max-width:92%}#toast.show{transform:translate(-50%,0)}#toast svg{color:var(--gb);flex:none}
+.rcpt{background:#fff;border-radius:28px;padding:26px 24px 22px;margin-bottom:14px}
+.rcpt .top{display:flex;flex-direction:column;align-items:center;gap:6px;border-bottom:1px solid var(--ln);padding-bottom:18px;margin-bottom:18px}.rcpt .badge.ok{width:56px;height:56px;animation:none;box-shadow:0 0 0 6px rgba(34,197,94,.18)}
+.rcpt .top span{color:var(--gr);font-weight:500;font-size:15px;margin-top:6px}.rcpt .top h2{font-size:38px;letter-spacing:-.05em}.rcpt .top small{color:var(--mu);font-size:13px}.rcpt .kv{margin-bottom:12px}
+.tag{display:inline-flex;gap:6px;align-items:center;background:var(--gs);color:var(--gd);font-size:13px;font-weight:600;padding:6px 10px;border-radius:99px}
+.acts{display:flex;gap:12px;margin-bottom:14px}.acts button{flex:1;background:#fff;border-radius:20px;padding:14px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;font-weight:500}.acts span{width:40px;height:40px;border-radius:50%;background:var(--bg);display:grid;place-items:center}
+.srch{display:flex;gap:10px;align-items:center;background:#fff;border-radius:26px;height:52px;padding:0 16px;color:var(--mu);font-size:15px;margin-bottom:14px}
+.offb{margin:0 20px 10px;background:var(--as);color:var(--ad);border-radius:16px;padding:12px 14px;font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center;line-height:1.4;animation:pop .4s}.simn{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto 10px;height:36px;padding:0 14px;border-radius:99px;border:1px dashed #9CA3AF;color:var(--mu);font-size:13px;font-weight:500}.sheet .simn{margin:0}.swt{width:48px;height:28px;border-radius:14px;background:#D1D5DB;position:relative;transition:background .2s;flex:none}.swt i{position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}.swt.on{background:var(--gb)}.swt.on i{transform:translateX(20px)}.lst{background:#fff;border-radius:20px;padding:4px 16px;margin-bottom:16px}.lr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--ln);width:100%;text-align:left;font-size:15px;font-weight:500}.lr:last-child{border:0}.lr>span{flex:1}.lr small{display:block;color:var(--mu);font-weight:400;font-size:12px;margin-top:2px}.cc{position:relative;overflow:hidden;height:190px;border-radius:24px;background:var(--ink);color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:space-between;margin:4px 0 18px;transition:filter .3s,opacity .3s}.cc.fz{filter:grayscale(1);opacity:.55}.cc>*{position:relative}.cc div{display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;color:#9CA3AF}.cc b{font-size:20px;letter-spacing:-.04em;color:#fff}.cc .n{font-size:20px;letter-spacing:.14em;font-weight:500;color:#fff}.cc .gl{position:absolute;border-radius:50%;width:220px;height:220px;background:linear-gradient(180deg,rgba(34,197,94,.55),rgba(34,197,94,0));top:-90px;right:-40px}.srin{width:100%;height:52px;border-radius:26px;border:1px solid var(--ln);background:#fff;padding:0 18px;font-size:15px;margin-bottom:12px;outline:0}.srin:focus{border-color:var(--gb)}.seg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 16px}.seg button,.chips.wrap button{height:36px;padding:0 14px;border-radius:99px;background:#fff;border:1px solid var(--ln);font-size:13px;font-weight:500}.seg .sel,.chips .sel{background:var(--ink);color:#fff;border-color:var(--ink)}.chips.wrap{flex-wrap:wrap;margin-bottom:0}.chips.wrap button{flex:none}.sk{animation:sk .35s}@keyframes sk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}.nt{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--ln)}.nt:last-child{border:0}.nt .ic{width:40px;height:40px;border-radius:50%;background:var(--gs);color:var(--gr);display:grid;place-items:center;flex:none}.nt b{font-size:15px;font-weight:600;display:block}.nt small{color:var(--mu);font-size:13px;line-height:1.4}.ds *{animation:none!important}.ds .gl,.ds .rg{display:none}.rcs button,.chips button,.acts button,.row,.lr,.card,.srch{transition:transform .12s}.rcs button:active,.chips button:active,.acts button:active,.row:active,.lr:active,.card:active,.srch:active{transform:scale(.96)}@media print{body{display:block;background:#fff;overflow:visible}.side,.hdr,.acts,.srch,.pri,.sb,#toast{display:none}.phone{box-shadow:none;height:auto;border-radius:0;overflow:visible}.scr{position:static}.scroll{overflow:visible}}@media(max-width:860px){.side{display:none}}
+@media(max-width:500px){body{padding:0}.phone{width:100vw;height:100dvh;border-radius:0;box-shadow:none}.sb{display:none}.scr{padding-top:env(safe-area-inset-top)}.scroll:first-child,.hh{margin-top:12px}.hdr{padding-top:12px}.nav{bottom:max(24px,env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="side">
+  <h1>Cowrie</h1>
+  <p>Never wonder if your money moved. A working prototype of the Cowrie transfer flow.</p>
+  <ol>
+    <li>Tap <b>Send</b> and enter <b>0022063129</b></li>
+    <li>Tap the name that pops up</li>
+    <li>Tap the <b>Online</b> chip to go offline</li>
+    <li>Swipe to send, then flip back online</li>
+  </ol>
+</div>
+<div class="phone" id="phone"><div class="scr" id="scr"></div><div id="toast" role="status"></div></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const P={back:'<path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>',bell:'<path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>',eye:'<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>',up:'<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',down:'<path d="M17 7 7 17"/><path d="M17 17H7V7"/>',zap:'<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',phone:'<rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/>',home:'<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',hist:'<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>',card:'<rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/>',user:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',plus:'<path d="M5 12h14"/><path d="M12 5v14"/>',wifi:'<path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/>',wifioff:'<path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/>',shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',check:'<path d="M20 6 9 17l-5-5"/>',ccheck:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',chev:'<path d="m6 9 6 6 6-6"/>',arr:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',bs:'<path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/>',share:'<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/>',copy:'<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',tag:'<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/>',search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'};
+const I=(n,s=20,w=2)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+const fmt=n=>'₦'+n.toLocaleString('en-NG',{minimumFractionDigits:2,maximumFractionDigits:2});
+const tc=s=>s.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
+const ini=s=>s.split(' ').map(w=>w[0]).join('').slice(0,2);
+const now=()=>new Date().toLocaleTimeString('en-NG',{hour:'numeric',minute:'2-digit'}).toUpperCase();
+const ACC={'0022063129':'ALFRED UBONG','0123456789':'CHIOMA EZE','2034567890':'EMEKA NWOSU'};
+const S={scr:'home',online:true,bal:312480,acct:'',found:null,looking:false,amt:'',rec:null,phase:'idle',tx:null,last:null,
+ acts:[{i:'up',n:'Chioma Eze',s:'Transfer · Today, 11:20 AM',a:'−₦12,500.00'},{i:'phone',n:'MTN Airtime',s:'Airtime · Yesterday',a:'−₦2,000.00'},{i:'down',n:'Brightpath Ltd',s:'Salary · 25 Sep',a:'+₦180,000.00',pos:1},{i:'zap',n:'Ikeja Electric',s:'Bills · 22 Sep',a:'−₦15,000.00'},{i:'down',n:'Ngozi Bello',s:'Transfer · 20 Sep',a:'+₦30,000.00',pos:1},{i:'up',n:'Emeka Nwosu',s:'Transfer · 18 Sep',a:'−₦8,000.00'}]};
+let T,TT;
+const chip=()=>`<button class="chip ${S.online?'on':'off'}" data-act="net" aria-label="Connection: ${S.online?'online':'offline'}. Tap to switch"><i></i>${S.online?'Online':'Offline'}</button>`;
+const sb=()=>`<div class="sb"><b>9:41</b><span>${I(S.online?'wifi':'wifioff',17,2.2)}<em class="bat"></em></span></div>`;
+const hdr=(t,b)=>`<div class="hdr"><button class="cb" data-act="go:${b}" aria-label="Back">${I('back')}</button><h1>${t}</h1>${chip()}</div>`;
+const kp=d=>`<div class="kp">${['1','2','3','4','5','6','7','8','9',d?'.':'','0','del'].map(k=>k?`<button data-k="${k}" aria-label="${k==='del'?'Delete':k}">${k==='del'?I('bs',24,1.8):k}</button>`:'<span></span>').join('')}</div>`;
+const fee=()=>{const a=+S.amt;return{a,f:10.75,s:a>=10000?50:0,t:a+10.75+(a>=10000?50:0)}};
+const tl=(st,l,t)=>`<div class="st ${st==='t'?'td':''}"><i class="dt ${st==='t'?'':st}">${st==='d'?I('check',12,3.5):''}</i><span>${l}</span><small>${t}</small></div>`;
+const V={
+home:()=>`${sb()}<div class="scroll"><div class="hh"><i class="av">AO</i><div class="gr"><small>${GR[S.lang]}</small><b>Ada</b></div>${chip()}<button class="cb" data-act="go:notif">${I('bell')}<i></i></button></div>
+<div class="bal"><div class="gl"></div><div class="rg r1"></div><div class="rg r2"></div><p>Total balance ${I('eye',18)}</p><h2>${fmt(S.bal)}</h2><div class="br"><span>Cowrie Savings •••• 4821</span><em>+₦24,000 this week</em></div></div>
+<div class="qa">${[['up','Send','go:find','p'],['down','Add money','go:addm'],['zap','Pay bills','go:bills'],['phone','Airtime','go:air']].map(([i,l,a,c])=>`<button class="${c||''}" data-act="${a}"><span>${I(i,22,2.2)}</span>${l}</button>`).join('')}</div>
+<div class="sh"><b>Send again</b><a>See all</a></div>
+<div class="rcs">${[['AU','Alfred','0022063129','#0B0B0C','#fff'],['CE','Chioma','0123456789','#FDE7D9','#9A3412'],['EN','Emeka','2034567890','#E0ECFF','#1D4ED8']].map(([a,n,ac,bg,fg])=>`<button data-act="quick:${ac}"><i class="av" style="background:${bg};color:${fg}">${a}</i>${n}</button>`).join('')}<button data-act="toast:Only three saved recipients in this demo"><i class="av" style="background:#F3E8FF;color:#7E22CE">BA</i>Bola</button><button data-act="go:find" aria-label="New recipient"><i class="new">${I('plus')}</i><span style="color:var(--mu)">New</span></button></div>
+<div class="sh"><b>Recent activity</b><a>View all</a></div><div class="list">${S.acts.map((r,i)=>`<button class="row ${r.pos?'pos':''} ${r.pend?'pend':''}" data-act='row:${i}'><span class="ic">${I(r.i,18)}</span><div><b>${r.n}</b><small>${r.pend?'Pending · sends when online':r.s}</small></div><strong>${r.a}</strong></button>`).join('')}</div></div>
+${nav('home')}`,
+find:()=>{const f=S.found;return`${sb()}${hdr('Send to bank','home')}<div class="scroll nb"><label>Bank</label><div class="card bnk"><i class="lg">Z</i><span>Zenith Bank</span>${I('chev',18)}</div><label>Account number</label><div class="fld ${S.acct?'f':''}"><span class="num">${S.acct||'<u>Try 0022063129</u>'}</span><small>${S.acct.length}/10</small></div>
+${S.looking?`<div class="lk"><i class="sp"></i>Looking up account…</div>`:''}${f==='none'?`<div class="err">No account found. Check the number and try again.</div>`:''}
+${f&&f!=='none'?`<div class="res"><div class="fl">${I('shield',16)}Account found</div><button class="rc" data-act="pick"><i class="av">${ini(f.n)}</i><div><b>${f.n}</b><small>${f.a} · Zenith Bank</small></div>${I('ccheck',26)}</button><p class="hint">Tap the name to continue</p></div>`:''}</div>${kp(false)}`},
+send:()=>{const a=+S.amt,over=a>S.bal;return`${sb()}${hdr('Send money','find')}<div class="scroll nb"><div class="card rec"><i class="av">${ini(S.rec.n)}</i><div><b>${tc(S.rec.n)}</b><small>${S.rec.a} · Zenith Bank</small></div></div><div class="vf">${I('shield',16)}Account name verified</div>
+<div class="amt"><small>Amount</small><h2 class='${over?'sk':''}'>₦${a.toLocaleString('en-NG')}<i class='cur'></i></h2><small style="${over?'color:#B91C1C':''}">${over?'More than your balance':'Available '+fmt(S.bal)}</small></div>
+<div class="chips">${[5000,10000,20000,50000].map(v=>`<button data-act="amt:${v}">₦${v.toLocaleString('en-NG')}</button>`).join('')}</div></div>${kp(false)}<div class="pad"><button class="pri" data-act="cont" ${a>0&&!over?'':'disabled'}>Continue</button></div>`},
+conf:()=>{const x=fee();return`${sb()}${hdr('Confirm transfer','send')}<div class="scroll nb"><div class="big"><small>You’re sending</small><h2>${fmt(x.a)}</h2></div><div class="card rec"><i class="av">${ini(S.rec.n)}</i><div><b>${tc(S.rec.n)}</b><small>${S.rec.a} · Zenith Bank</small></div></div>
+<div class="bd"><small>COST BREAKDOWN</small><div class="kv"><span>Amount</span><b>${fmt(x.a)}</b></div><div class="kv"><span>Transfer fee</span><b>${fmt(x.f)}</b></div><div class="kv"><span>Stamp duty</span><b>${fmt(x.s)}</b></div><div class="kv t"><span>Total debit</span><b>${fmt(x.t)}</b></div></div></div>
+${S.online?'':`<div class='offb'>${I('wifioff',20)}<span>No network. Swipe and we’ll save this transfer, then send it the moment you’re back online.</span></div>`}${S.phase==='idle'?`<button class='simn' data-act='net'>${I(S.online?'wifioff':'wifi',16)}${S.online?'Demo: simulate no network':'Demo: bring the network back'}</button>`:''}<p class="note">Money leaves your account only after you swipe.</p>
+<div class="track" id="trk"><div class="lbl">Swipe to ${S.online?'send':'save'} ${fmt(x.t)}</div><button class="thumb" aria-label="Swipe to send, or press Enter">${I('arr',24,2.5)}</button></div>${S.phase!=='idle'?sheet():''}`},
+rcpt:()=>{const t=S.view||S.tx;return`${sb()}<div class="hdr"><button class="cb" data-act="go:home" aria-label="Home">${I('home')}</button><h1>Receipt</h1><button class="cb" data-act="share" aria-label="Share">${I('share')}</button></div><div class="scroll nb"><div class="rcpt"><div class="top"><i class="badge ok">${I('check',28,3)}</i><span>Transfer successful</span><h2>${fmt(t.a)}</h2><small>${t.date}${t.time?' · '+t.time:''}</small></div>
+<div class="kv"><span>To</span><b>${tc(t.to.n)}</b></div><div class="kv"><span>Bank</span><b>Zenith Bank · ${t.to.a}</b></div><div class="kv"><span>From</span><b>Cowrie Savings •••• 4821</b></div><div class="kv"><span>Fee</span><b>${fmt(t.f)}</b></div><div class="kv"><span>Stamp duty</span><b>${fmt(t.s)}</b></div><div class="kv"><span>Reference</span><b>${t.ref}</b></div><div class="kv" style="align-items:center;margin:0"><span>Category</span><b class="tag">${I('tag',14)}Transfers · auto-tagged</b></div></div>
+<div class="acts"><button data-act="share"><span>${I('share',20)}</span>Share</button><button data-act="pdf"><span>${I('file',20)}</span>Save PDF</button><button data-act="copy"><span>${I('copy',20)}</span>Copy ref</button></div>
+<button class="srch" data-act="go:act" style="width:100%;text-align:left">${I('search',18)}Search your vault · 128 receipts</button><button class="pri" data-act="go:home">${I('home',18,2.2)}Back to home</button></div>`}
+};
+function sheet(){const x=fee(),t=S.tx,n=tc(S.rec.n);let h='';
+if(S.phase==='failed')h=`<i class='badge' style='background:#FEF2F2;color:#B91C1C'>${I('x',32)}</i><h3>Transfer didn’t go through</h3><p>${n}’s bank couldn’t process it right now. No money left your account.</p><div class='tl'>${tl('d','Saved securely',t.time)}${tl('t','Sent to Zenith Bank','Failed')}</div><button class='pri' data-act='retry'>Try again</button><button class='ghost' data-act='cancelf'>Cancel transfer</button>`;else if(S.phase==='sending')h=`<i class="badge am"><i class="sp" style="width:30px;height:30px;border-width:3px"></i></i><h3>Sending ${fmt(x.a)}…</h3><p>Hold on, this takes a few seconds.</p>`;
+else if(S.phase==='queued')h=`<i class="badge am">${I('wifioff',32)}</i><h3>Saved. We’ll send it when you’re back online</h3><p>Your ${fmt(x.a)} is safe. It goes out automatically once your network is stable. No need to retry.</p><div class="tl">${tl('d','Saved securely',t.time)}${tl('a','Waiting for network','Retrying…')}${tl('t','Sent to Zenith Bank','—')}</div><button class='simn' data-act='net'>${I('wifi',16)}Demo: bring the network back</button><button class="pri" data-act="home-q">Got it</button><button class="ghost" data-act="cancel">Cancel transfer</button>`;
+else h=`<i class="badge ok">${I('check',38,3)}</i><h3 style="font-size:26px">Transfer sent</h3><p>${fmt(x.a)} has reached ${n} at Zenith Bank.</p><div class="tl">${tl('d','Saved securely',t.time)}${t.q?tl('d','Network restored',t.sent):''}${tl('d','Sent to Zenith Bank',t.sent)}</div><button class="pri" data-act="go:rcpt">View receipt</button><button class="ghost" data-act="done">Done</button>`;
+return`<div class="scrim"></div><div class="sheet"><i class="hd"></i>${h}</div>`}
+function render(){const el=$('#scr'),sc=el.querySelector('.scroll'),y=sc?sc.scrollTop:0,ch=S.last!==S.scr;S.last=S.scr;el.className='scr'+(ch?' in':'');el.innerHTML=V[S.scr]();if(!ch){const n=el.querySelector('.scroll');if(n)n.scrollTop=y}if(S.scr==='conf'&&S.phase==='idle')swipe()}
+function go(x){if(x==='bills'||x==='air'){S.pay={k:x,i:0,err:''};x='pay'}if(x==='home')S.view=null;S.scr=x;if(x==='find'){S.acct='';S.found=null;S.looking=false;clearTimeout(T)}if(x==='send'||x==='pay')S.amt='';render()}
+function toast(m,ok){const t=$('#toast');t.innerHTML=(ok?I('ccheck',18):'')+m;t.classList.add('show');clearTimeout(TT);TT=setTimeout(()=>t.classList.remove('show'),2600)}
+function key(k){if(S.scr==='find'){if(k==='del')S.acct=S.acct.slice(0,-1);else if(/\d/.test(k)&&S.acct.length<10)S.acct+=k;else return;S.found=null;S.looking=false;clearTimeout(T);if(S.acct.length===10){S.looking=true;T=setTimeout(()=>{S.looking=false;S.found=ACC[S.acct]?{n:ACC[S.acct],a:S.acct}:'none';render()},700)}render()}
+else if(S.scr==='send'||S.scr==='pay'){if(k==='del')S.amt=S.amt.slice(0,-1);else if(/\d/.test(k)&&S.amt.length<9)S.amt=(S.amt+k).replace(/^0+/,'');else return;render()}}
+function send(){S.view=null;const x=fee();S.tx={a:x.a,f:x.f,s:x.s,t:x.t,to:S.rec,ref:'CWR-'+Math.floor(Math.random()*9e5+1e5)+'-'+Math.floor(Math.random()*9e3+1e3),time:now(),date:new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}),q:!S.online};
+S.acts.unshift({i:'up',n:tc(S.rec.n),s:'Transfer · Just now',a:'−'+fmt(x.t).replace(/\.00$/,'.00'),pend:true,tx:1});
+if(S.online){S.phase='sending';setTimeout(()=>{if(S.tx&&S.phase==='sending')finish()},1300)}else S.phase='queued';setTimeout(render,320)}
+function finish(){const t=S.tx;if(t.to.a==='2034567890'&&!t.retried){S.acts.shift();if(S.scr==='conf')S.phase='failed';else{S.phase='idle';toast(`Transfer to ${tc(t.to.n)} failed. No money left your account`)}render();return}S.bal-=t.t;t.sent=now();delete S.acts[0].pend;S.acts[0].s='Transfer · Today, '+t.sent;if(S.scr==='conf'){S.phase='sent'}else{S.phase='idle';toast(`${fmt(t.a)} sent to ${tc(t.to.n)}`,1)}if(t.q&&S.scr==='conf')toast('Network restored — sent just now',1);render()}
+function swipe(){const tr=$('#trk'),th=tr.querySelector('.thumb');let x0=0,dx=0,d=false;const max=()=>tr.clientWidth-th.clientWidth-8;
+th.onpointerdown=e=>{d=true;x0=e.clientX;th.setPointerCapture(e.pointerId);th.style.transition='none'};
+th.onpointermove=e=>{if(!d)return;dx=Math.max(0,Math.min(max(),e.clientX-x0));th.style.transform=`translateX(${dx}px)`;tr.style.setProperty('--p',dx/max())};
+const end=()=>{if(!d)return;d=false;th.style.transition='transform .25s';if(dx>max()*.85){th.style.transform=`translateX(${max()}px)`;tr.classList.add('done');tr.style.setProperty('--p',1);send()}else{th.style.transform='';tr.style.setProperty('--p',0)}dx=0};
+th.onpointerup=end;th.onpointercancel=end;th.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tr.style.setProperty('--p',1);tr.classList.add('done');send()}}}
+$('#phone').addEventListener('click',e=>{const k=e.target.closest('[data-k]');if(k)return key(k.dataset.k);const b=e.target.closest('[data-act]');if(!b)return;const[a,v]=b.dataset.act.split(/:(.*)/s);
+if(a==='go')go(v);else if(a==='toast')toast(v);else if(a==='net'){S.online=!S.online;toast(S.online?'Back online':'You’re offline. Transfers are saved and sent later');render();if(S.online&&S.phase==='queued')setTimeout(()=>{if(S.phase==='queued')finish()},1600)}
+else if(a==='pick'){S.rec=S.found;go('send')}else if(a==='quick'){S.rec={n:ACC[v],a:v};go('send')}else if(a==='amt'){S.amt=v;render()}else if(a==='cont')go('conf')
+else if(a==='home-q'){go('home')}else if(a==='cancel'){S.acts.shift();S.tx=null;S.phase='idle';go('home')}else if(a==='done'){S.phase='idle';go('home')}
+else if(a==='share'){const t=S.tx,m=`Cowrie receipt: ${fmt(t.a)} to ${tc(t.to.n)}, ref ${t.ref}`;if(navigator.share)navigator.share({title:'Cowrie receipt',text:m}).catch(()=>{});else{try{navigator.clipboard.writeText(m)}catch(_){}toast('Receipt copied',1)}}
+else if(a==='copy'){try{navigator.clipboard.writeText(S.tx.ref)}catch(_){}toast('Reference copied',1)}});
+document.addEventListener('keydown',e=>{if(/^\d$/.test(e.key))key(e.key);else if(e.key==='Backspace')key('del')});
+P.x=`<path d='M18 6 6 18'/><path d='m6 6 12 12'/>`;
+Object.assign(S,{lang:'English',f:'All',q:'',frozen:false,showc:false,onl:true,bio:true,ds:false,view:null,pay:{k:'bills',i:0,err:''}});
+const GR={English:'Good afternoon','Yorùbá':'Ẹ kú ọ̀sán',Igbo:'Ehihie ọma',Hausa:'Barka da rana',Pidgin:'How far'};
+const nav=a=>`<div class='nav'>${[['home','home','Home'],['hist','act','Activity'],['card','cards','Cards'],['user','prof','Profile']].map(([i,s,l])=>`<button class='${a===s?'a':''}' aria-label='${l}' data-act='go:${s}'>${I(i,20,2.2)}${a===s?l:''}</button>`).join('')}</div>`;
+const sw=k=>`<button class='swt ${S[k]?'on':''}' role='switch' aria-checked='${!!S[k]}' aria-label='${k}' data-act='sw:${k}'><i></i></button>`;
+const rowH=(r,i)=>`<button class='row ${r.pos?'pos':''} ${r.pend?'pend':''}' data-act='row:${i}'><span class='ic'>${I(r.i,18)}</span><div><b>${r.n}</b><small>${r.pend?'Pending · sends when online':r.s}</small></div><strong>${r.a}</strong></button>`;
+const actList=()=>{const q=S.q.toLowerCase(),l=S.acts.map((r,i)=>[r,i]).filter(([r])=>(S.f==='All'||(S.f==='Received'?r.pos:!r.pos))&&(!q||(r.n+r.a+r.s).toLowerCase().includes(q)));return l.length?l.map(([r,i])=>rowH(r,i)).join(''):`<p class='hint' style='padding:24px 0'>No receipts match. Try a different name or amount.</p>`};
+const PV={bills:{t:'Pay bills',ps:['Ikeja Electric','DSTV','LAWMA','Spectranet'],lab:'Meter or smartcard number',val:'0412 889 120',icon:'zap'},air:{t:'Buy airtime',ps:['MTN','Airtel','Glo','9mobile'],lab:'Phone number',val:'0803 456 7890',icon:'phone'}};
+V.act=()=>`${sb()}<div class='hdr'><h1>Activity</h1>${chip()}</div><div class='scroll'><input id='q' class='srin' placeholder='Search your vault by name or amount' value='${S.q}' aria-label='Search receipts'><div class='seg'>${['All','Sent','Received'].map(f=>`<button class='${S.f===f?'sel':''}' data-act='flt:${f}'>${f}</button>`).join('')}</div><div class='list' id='alist'>${actList()}</div></div>${nav('act')}`;
+V.cards=()=>`${sb()}<div class='hdr'><h1>Cards</h1>${chip()}</div><div class='scroll'><div class='cc ${S.frozen?'fz':''}'><div class='gl'></div><div><b>cowrie</b><span>${S.frozen?'Frozen':'Debit'}</span></div><div class='n'>${S.showc?'4829 1034 7716 4821':'•••• •••• •••• 4821'}</div><div><span>ADA OKAFOR</span><span>12/28</span></div></div><div class='lst'><div class='lr'><span>Freeze card<small>Block all payments instantly</small></span>${sw('frozen')}</div><div class='lr'><span>Show card details<small>Hidden by default</small></span>${sw('showc')}</div><div class='lr'><span>Online payments</span>${sw('onl')}</div><button class='lr' data-act='toast:Limits can’t be changed in this demo'><span>Monthly limit<small>₦2,000,000.00</small></span>${I('arr',18)}</button></div></div>${nav('cards')}`;
+V.prof=()=>`${sb()}<div class='hdr'><h1>Profile</h1>${chip()}</div><div class='scroll'><div class='card' style='margin-bottom:16px'><i class='av' style='width:56px;height:56px;font-size:18px'>AO</i><div><b style='font-size:17px;font-weight:600;display:block'>Ada Okafor</b><small>0803 ••• 4821 · Cowrie Savings</small></div></div><label>Language</label><div class='seg'>${Object.keys(GR).map(l=>`<button class='${S.lang===l?'sel':''}' data-act='lang:${l}'>${l}</button>`).join('')}</div><div class='lst'><div class='lr'><span>Data saver mode<small>Simpler visuals for weak networks</small></span>${sw('ds')}</div><div class='lr'><span>Biometric login<small>Fingerprint or face, across the whole app</small></span>${sw('bio')}</div></div><div class='lst'><button class='lr' data-act='toast:Change PIN isn’t part of this demo'><span>Change PIN<small>We ask for it only to protect large transfers</small></span>${I('arr',18)}</button><button class='lr' data-act='toast:Support chat isn’t part of this demo'><span>Help and support</span>${I('arr',18)}</button></div></div>${nav('prof')}`;
+V.notif=()=>{const t=S.tx&&S.tx.sent?[['ccheck','Transfer sent',`${fmt(S.tx.a)} reached ${tc(S.tx.to.n)}.`]]:[],n=[...t,['down','Salary received','₦180,000.00 from Brightpath Ltd on 25 Sep.'],['shield','Security tip','Cowrie will never ask for your PIN or OTP by phone, SMS or WhatsApp.'],['wifi','Offline-first transfers','With no network, transfers are saved and sent when you’re back online.']];return`${sb()}${hdr('Notifications','home')}<div class='scroll nb'><div class='list'>${n.map(([i,b,s])=>`<div class='nt'><span class='ic'>${I(i,18)}</span><div><b>${b}</b><small>${s}</small></div></div>`).join('')}</div></div>`};
+V.addm=()=>`${sb()}${hdr('Add money','home')}<div class='scroll nb'><div class='bal'><div class='gl'></div><p>Your Cowrie account</p><h2 style='letter-spacing:.08em;font-size:34px'>0048214821</h2><div class='br'><span>ADA OKAFOR · Cowrie Bank</span></div></div><p class='hint' style='text-align:left;margin:0 4px 16px'>Send money to this account from any bank app. It lands in your balance within seconds.</p><button class='pri' data-act='cpy:0048214821'>${I('copy',18)}Copy account number</button><button class='ghost' style='margin-top:8px' data-act='share-acct'>Share account details</button></div>`;
+V.pay=()=>{const c=PV[S.pay.k],a=+S.amt,over=a>S.bal;return`${sb()}${hdr(c.t,'home')}<div class='scroll nb'><label>Provider</label><div class='chips wrap'>${c.ps.map((p,i)=>`<button class='${S.pay.i===i?'sel':''}' data-act='prov:${i}'>${p}</button>`).join('')}</div><label style='margin-top:16px'>${c.lab}</label><div class='fld f' style='margin-bottom:0'><span class='num' style='font-size:18px;letter-spacing:.04em'>${c.val}</span>${I('ccheck',20)}</div><div class='amt'><small>Amount</small><h2 class='${over?'sk':''}'>₦${a.toLocaleString('en-NG')}<i class='cur'></i></h2><small style='${over?'color:#B91C1C':''}'>${over?'More than your balance':'Available '+fmt(S.bal)}</small></div>${S.pay.err?`<div class='err'>${S.pay.err}</div>`:''}</div>${kp(false)}<div class='pad'><button class='pri' data-act='pay' ${a>0&&!over?'':'disabled'}>Pay ${a?fmt(a):''}</button></div>`};
+$('#phone').addEventListener('input',e=>{if(e.target.id==='q'){S.q=e.target.value;$('#alist').innerHTML=actList()}});
+$('#phone').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const[a,v]=b.dataset.act.split(/:(.*)/s);
+if(a==='sw'){S[v]=!S[v];if(v==='frozen')toast(S.frozen?'Card frozen. Payments are blocked':'Card is active again',1);if(v==='ds')document.body.classList.toggle('ds',S.ds);render()}
+else if(a==='lang'){S.lang=v;render()}
+else if(a==='flt'){S.f=v;render()}
+else if(a==='prov'){S.pay.i=+v;S.pay.err='';render()}
+else if(a==='row'){const r=S.acts[+v];if(r.tx)S.view=null;else{const amt=Number(r.a.replace(/[^\d.]/g,''));S.view={a:amt,f:r.i==='up'?10.75:0,s:0,to:{n:r.n.toUpperCase(),a:'0123456789'},ref:'CWR-'+(240000+(+v)*7919)+'-'+(1000+(+v)*37),time:'',date:(r.s.split('·')[1]||r.s).trim()}}go('rcpt')}
+else if(a==='pdf')window.print();
+else if(a==='retry'){S.tx.retried=true;S.acts.unshift({i:'up',n:tc(S.rec.n),s:'Transfer · Just now',a:'−'+fmt(S.tx.t),pend:true,tx:1});S.phase='sending';render();setTimeout(()=>{if(S.phase==='sending')finish()},1300)}
+else if(a==='cancelf'){S.tx=null;S.phase='idle';go('home')}
+else if(a==='pay'){const c=PV[S.pay.k],amt=+S.amt,p=c.ps[S.pay.i];if(!S.online){S.pay.err='You’re offline. Bills need a live connection. Tap Offline to go back online, then pay.';render();return}S.bal-=amt;S.acts.unshift({i:c.icon,n:p,s:(S.pay.k==='air'?'Airtime':'Bills')+' · Just now',a:'−'+fmt(amt)});toast(`${fmt(amt)} paid to ${p}`,1);go('home')}
+else if(a==='cpy'){try{navigator.clipboard.writeText(v)}catch(_){}toast('Copied',1)}
+else if(a==='share-acct'){const m='Cowrie account 0048214821, ADA OKAFOR';if(navigator.share)navigator.share({title:'My Cowrie account',text:m}).catch(()=>{});else{try{navigator.clipboard.writeText(m)}catch(_){}toast('Account details copied',1)}}});
+function setNet(on){if(S.online===on)return;S.online=on;toast(on?'Back online':'You’re offline. Transfers are saved and sent later');render();if(on&&S.phase==='queued')setTimeout(()=>{if(S.phase==='queued')finish()},1600)}
+addEventListener('offline',()=>setNet(false));addEventListener('online',()=>setNet(true));if(navigator.onLine===false)S.online=false;
+render();
+</script>
+</body>
+</html>
